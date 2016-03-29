@@ -44,6 +44,32 @@ case HTTPlacebo.get(url) do
 end
 ```
 
+### Using with existing applications
+
+You can use HTTPlacebo as replacement for HTTPotion/HTTPoison instead of mocking as described in the [Mocks and Explicit contracts](http://blog.plataformatec.com.br/2015/10/mocks-and-explicit-contracts/) post by Jose Valim.
+
+```elixir
+defmodule MyBlog.Post do
+  @http_mod Application.get_env(:my_app, :http_mod)
+
+  def get(id) do
+    # ...
+    @http_mod.get("http://myblog.com/posts/" <> id)
+    # ...
+  end
+end
+```
+
+And now we can configure it per environment as:
+
+```elixir
+# In config/dev.exs
+config :my_app, :http_mod, HTTPoison
+
+# In config/test.exs
+config :my_app, :http_mod, HTTPlacebo
+```
+
 ## License
 
     Copyright © 2016 Guillermo Iguaran <guilleiguaran@gmail.com>
