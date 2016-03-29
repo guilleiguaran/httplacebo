@@ -1,4 +1,4 @@
-# Httplacebo
+# HTTPlacebo
 
 HTTP client mocking tool for Elixir, based on [HTTPotion](https://github.com/myfreeweb/httpotion), [HTTPoison](https://github.com/edgurgel/httpoison) and inspired in [HTTPretty](https://github.com/gabrielfalcao/HTTPretty).
 
