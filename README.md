@@ -70,16 +70,16 @@ config :my_app, :http_mod, HTTPoison
 config :my_app, :http_mod, HTTPlacebo
 ```
 
-### Wrapping `HTTPoison.Base`
+### Wrapping `HTTPlacebo.Base`
 
-You can also use the `HTTPoison.Base` module in your modules in order to make
-cool API clients or something. The following example wraps `HTTPoison.Base` in
-order to build a client for the GitHub API
+You can also use the `HTTPlacebo.Base` module in your modules in order to make
+cool API clients or something. The following example can wrap `HTTPoison.Base` or
+`HTTPlacebo.Base` in order to build a client for the GitHub API
 ([Poison](https://github.com/devinus/poison) is used for JSON decoding):
 
 ```elixir
 defmodule GitHub do
-  @http_mod Application.get_env(:my_app, :http_mod, HTTPoison.Base)
+  @http_mod Application.get_env(:my_app, :http_mod)
   use @http_mod
 
   @expected_fields ~w(
