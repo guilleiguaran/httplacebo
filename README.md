@@ -72,23 +72,15 @@ config :my_app, :http_mod, HTTPlacebo
 
 ### Wrapping `HTTPlacebo.Base`
 
-You can also use the `HTTPlacebo.Base` module in your modules in order to make
-cool API clients or something. The following example can wrap `HTTPoison.Base` or
-`HTTPlacebo.Base` in order to build a client for the GitHub API
+You can also use the `HTTPlacebo.Base` module in your test modules in order to
+make cool API clients or something.
+
+The following example wraps `HTTPoison.Base` in order to build a client for the GitHub API
 ([Poison](https://github.com/devinus/poison) is used for JSON decoding):
 
 ```elixir
-defmodule GitHub do
-  @http_mod Application.get_env(:my_app, :http_mod)
-  use @http_mod
-
-  @expected_fields ~w(
-    login id avatar_url gravatar_id url html_url followers_url
-    following_url gists_url starred_url subscriptions_url
-    organizations_url repos_url events_url received_events_url type
-    site_admin name company blog location email hireable bio
-    public_repos public_gists followers following created_at updated_at
-  )
+defmodule GitHub.Client do
+  use HTTPoison.Base
 
   def process_url(url) do
     "https://api.github.com" <> url
@@ -97,16 +89,37 @@ defmodule GitHub do
   def process_response_body(body) do
     body
     |> Poison.decode!
-    |> Dict.take(@expected_fields)
     |> Enum.map(fn({k, v}) -> {String.to_atom(k), v} end)
   end
 end
 ```
 
-```iex
-iex> GitHub.start
-iex> GitHub.get!("/users/myfreeweb").body[:public_repos]
-37
+For your tests you can create a test module similarly:
+
+```elixir
+defmodule GitHub.InMemoryClient do
+  use HTTPlacebo.Base
+
+  def process_url(url) do
+    "https://api.github.com" <> url
+  end
+
+  def process_response_body(body) do
+    body
+    |> Poison.decode!
+    |> Enum.map(fn({k, v}) -> {String.to_atom(k), v} end)
+  end
+end
+```
+
+And now we can configure it per environment as:
+
+```elixir
+# In config/dev.exs
+config :my_app, :github_client, GitHub.Client
+
+# In config/test.exs
+config :my_app, :github_client, GitHub.InMemoryClient
 ```
 
 It's possible to extend the functions listed below:
