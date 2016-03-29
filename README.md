@@ -28,9 +28,9 @@ iex> HTTPlacebo.get! "http://localhost:3000/posts/1"
   status_code: 200
 }
 iex> HTTPlacebo.get! "http://localhost:3000/users"
-%HTTPoison.Response{body: "Not Found", status_code: 404}
+%HTTPlacebo.Response{body: "Not Found", status_code: 404}
 iex> HTTPlacebo.get "http://localhost:3000/users"
-{:ok, %HTTPoison.Response{body: "Not Found", status_code: 404}}
+{:ok, %HTTPlacebo.Response{body: "Not Found", status_code: 404}}
 ```
 
 You can also easily pattern match on the `HTTPlacebo.Response` struct:
