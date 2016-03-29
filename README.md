@@ -1,10 +1,8 @@
 # Httplacebo
 
-**TODO: Add description**
+HTTP client mocking tool for Elixir, based on [HTTPotion](https://github.com/myfreeweb/httpotion), [HTTPoison](https://github.com/edgurgel/httpoison) and inspired in [HTTPretty](https://github.com/gabrielfalcao/HTTPretty).
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
   1. Add httplacebo to your list of dependencies in `mix.exs`:
 
@@ -17,3 +15,38 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
         def application do
           [applications: [:httplacebo]]
         end
+
+## Usage
+
+```iex
+iex> HTTPlacebo.start
+iex> HTTPlacebo.register_uri(:get, "http://localhost:3000/posts/1", 200, ~s({"post": {"title": "First Post"}}), [{"Content-Type", "application/json"}])
+iex> HTTPlacebo.get! "http://localhost:3000/posts/1"
+%HTTPlacebo.Response{
+  body: "{\"post\": {\"title\": \"First Post\"}}",
+  headers: [{"Content-Type", "application/json"}],
+  status_code: 200
+}
+iex> HTTPlacebo.get! "http://localhost:3000/users"
+%HTTPoison.Response{body: "Not Found", status_code: 404}
+iex> HTTPlacebo.get "http://localhost:3000/users"
+{:ok, %HTTPoison.Response{body: "Not Found", status_code: 404}}
+```
+
+You can also easily pattern match on the `HTTPlacebo.Response` struct:
+
+```elixir
+case HTTPlacebo.get(url) do
+  {:ok, %HTTPlacebo.Response{status_code: 200, body: body}} ->
+    IO.puts body
+  {:ok, %HTTPlacebo.Response{status_code: 404}} ->
+    IO.puts "Not found :("
+end
+```
+
+## License
+
+    Copyright © 2016 Guillermo Iguaran <guilleiguaran@gmail.com>
+
+    This work is free. You can redistribute it and/or modify it under the
+    terms of the MIT License. See the LICENSE file for more details.
