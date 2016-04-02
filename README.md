@@ -46,7 +46,7 @@ end
 
 ### Using with existing applications
 
-You can use HTTPlacebo as replacement for HTTPotion/HTTPoison instead of mocking as described in the [Mocks and Explicit contracts](http://blog.plataformatec.com.br/2015/10/mocks-and-explicit-contracts/) post by Jose Valim.
+You can use HTTPlacebo as replacement for HTTPoison instead of mocking as described in the [Mocks and Explicit contracts](http://blog.plataformatec.com.br/2015/10/mocks-and-explicit-contracts/) post by Jose Valim.
 
 ```elixir
 defmodule MyBlog.Post do
