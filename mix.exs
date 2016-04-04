@@ -1,13 +1,19 @@
 defmodule Httplacebo.Mixfile do
   use Mix.Project
 
+  @description "The 'do nothing' HTTP client for Elixir."
+
   def project do
     [app: :httplacebo,
      version: "0.0.1",
      elixir: "~> 1.1",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     name: "HTTPlacebo",
+     description: @description,
+     package: package,
+     deps: deps,
+     source_url: "https://github.com/guilleiguaran/httplacebo"]
   end
 
   # Configuration for the OTP application
@@ -28,5 +34,11 @@ defmodule Httplacebo.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     []
+  end
+
+  defp package do
+    [ maintainers: ["Guillermo Iguaran"],
+      licenses: ["MIT"],
+      links: %{"Github" => "https://github.com/guilleiguaran/httplacebo"} ]
   end
 end
