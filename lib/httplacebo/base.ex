@@ -7,7 +7,7 @@ defmodule HTTPlacebo.Base do
       @type body :: binary | {:form, [{atom, any}]} | {:file, binary}
 
       def start() do
-        :ets.new(:uris_registry, [:named_table])
+        :ets.new(:uris_registry, [:named_table, :public])
         {:ok, []}
       end
 
