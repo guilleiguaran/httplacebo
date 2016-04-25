@@ -7,7 +7,7 @@ HTTP client mocking tool for Elixir, based on [HTTPotion](https://github.com/myf
   1. Add httplacebo to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:httplacebo, "~> 0.0.1"}]
+          [{:httplacebo, "~> 0.1.0"}]
         end
 
   2. Ensure httplacebo is started before your application:
